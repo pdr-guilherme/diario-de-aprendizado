@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="col-8 mx-auto">
+    <p class="fs-3 mb-3">{{ entrada.texto_entrada }}</p>
+    <p class="text-secondary">
+      por {{ entrada.usuario }}, {{ entrada.data_pub|date }}, sobre
+      <a href="{{ entrada.topico.get_absolute_url }}"
+         class="text-decoration-none">{{ entrada.topico }}</a>
+    </p>
+  </div>
+{% endblock content %}

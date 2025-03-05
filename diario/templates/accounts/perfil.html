@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="my-3 text-center">{{ usuario }}</h1>
+
+  {% if user.is_authenticated and user == usuario %}
+    <div class="position-fixed bottom-0 end-0 mb-3 me-3 dropdown dropup dropdown-menu-end">
+      <button class="btn btn-secondary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">Gerenciamento de Conta</button>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="{% url 'apagar_conta' %}" class="dropdown-item">Alterar Senha</a>
+        </li>
+        <li>
+          <a href="{% url 'alterar_senha' %}" class="dropdown-item">Apagar Conta</a>
+        </li>
+
+        {% if user.is_superuser %}
+          <li>
+            <a href="{% url 'admin:index' %}" class="dropdown-item">Administração</a>
+          </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  {% endif %}
+
+  <div class="d-flex align-content-center flex-wrap justify-content-center">
+    {% for entrada in entradas %}
+      <div class="card col-3 mb-4 mx-3">
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="{{ entrada.get_absolute_url }}" class="text-decoration-none">{{ entrada }}</a>
+          </h4>
+          <h5 class="card-subtitle mb-2 text-body-secondary">{{ entrada.data_pub|date }}</h5>
+        </div>
+      </div>
+    {% empty %}
+
+      {% if usuario == user %}
+        <p>Você não fez nenhuma postagem ainda :(</p>
+      {% else %}
+        <p>{{ usuario }} não fez nenhuma postagem ainda :(</p>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+{% endblock content %}

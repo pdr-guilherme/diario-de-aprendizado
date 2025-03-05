@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}
+{% endblock header %}
+{% block content %}
+  <div class="col-8 mx-auto my-auto">
+    <h1 class="mt-2 text-center display-5">Criar Conta</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary w-100">Criar Conta</button>
+    </form>
+  </div>
+{% endblock content %}

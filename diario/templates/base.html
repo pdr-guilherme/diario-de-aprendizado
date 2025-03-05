@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description"
+          content="O aprendizado é uma jornada, e seu diário é o mapa.">
+    <meta name="author" content="Pedro Guilherme">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+      <title>
+        {% block titulo %}
+          Diário de Aprendizado
+        {% endblock titulo %}
+      </title>
+      {% load static %}
+
+      <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+    </head>
+    <body>
+      {% block header %}
+        <div class="container">
+          <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+            <div class="col-md-3 mb-2 mb-md-0">
+              <a href="{% url 'topicos' %}"
+                 class="d-inline-flex link-body-emphasis text-decoration-none fs-2">&#128214</a>
+            </div>
+            <div class="d-flex justify-content-end col-md-3">
+
+              {% if not user.is_authenticated %}
+                <a href="{% url 'login' %}"
+                   class="btn btn-outline-primary me-3"
+                   role="button">Login</a>
+                <a href="{% url 'criar_conta' %}" class="btn btn-primary" role="button">Criar Conta</a>
+              {% else %}
+                <div class="d-flex align-items-center">
+                  <a class="text-decoration-none mb-0 me-3"
+                     href="{{ user.get_absolute_url }}">{{ user.username }}</a>
+                  <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input class="btn btn-primary mb-0 w-100" type="submit" value="Sair">
+                  </form>
+                </div>
+              {% endif %}
+
+            </div>
+          </header>
+        </div>
+      {% endblock header %}
+      <div class="container-fluid">
+        {% block content %}
+        {% endblock content %}
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+              crossorigin="anonymous"></script>
+    </body>
+  </html>

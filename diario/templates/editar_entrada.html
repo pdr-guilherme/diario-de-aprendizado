@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h1 class="text-center display-5">Adicionar Entrada</h1>
+  <div class="col-6 mx-auto pb-3 text-align-center">
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary w-100">Atualizar</button>
+    </form>
+  </div>
+{% endblock content %}

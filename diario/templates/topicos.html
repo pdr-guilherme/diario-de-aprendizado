@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="text-center my-3">Tópicos Disponíveis</h1>
+  <div class="d-flex align-content-center flex-wrap justify-content-center">
+    {% for topico in topicos %}
+      <div class="card text-center mx-3 mb-3">
+        <div class="card-header">
+          <h2>
+            <a href="{{ topico.get_absolute_url }}"
+               class="text-decoration-none text-black">{{ topico }}</a>
+          </h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{ topico.num_entradas }} entrada{{ topico.num_entradas|pluralize }}</p>
+        </div>
+        <div class="card-footer text-body-secondary">{{ topico.data_pub|date }}</div>
+      </div>
+    {% empty %}
+      <p>A administração ESQUECEU de adicionar tópicos</p>
+      <img src="https://media.tenor.com/YG0XC4HPopIAAAAj/spinning-skull.gif"
+           alt="caveira 3d rotacionando no eixo x"
+           width="50px"
+           height="50px">
+    {% endfor %}
+  </div>
+{% endblock content %}

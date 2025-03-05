@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <p>
+    <a href="{% url 'criar_entrada' topico %}"
+       class="btn btn-primary position-fixed bottom-0 end-0 mb-3 me-3"
+       role="button">Nova Entrada</a>
+  </p>
+  <h1 class="text-center mb-3">Entradas sobre {{ nome_topico }}</h1>
+  <div class="d-flex align-content-center flex-wrap justify-content-center">
+    {% for entrada in entradas %}
+      <div class="card col-3 mb-4 mx-3">
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="{{ entrada.get_absolute_url }}" class="text-decoration-none">{{ entrada }}</a>
+          </h4>
+          <h5 class="card-subtitle mb-2 text-body-secondary">
+            <a href="{{ entrada.usuario.get_absolute_url }}"
+               class="text-decoration-none">{{ entrada.usuario }}</a>, {{ entrada.data_pub|date }}
+          </h5>
+        </div>
+
+        {% if request.user == entrada.usuario %}
+          <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'editar_entrada' topico entrada.id %}"
+               class="btn btn-secondary me-3"
+               role="button">Editar</a>
+            <form method="post"
+                  action="{% url 'apagar_entrada' topico entrada.id %}"
+                  id="form-apagar-{{ entrada.id }}">
+              {% csrf_token %}
+              <button type="button"
+                      class="btn btn-danger"
+                      onclick="confirmarDelete({{ entrada.id }})">Apagar</button>
+            </form>
+          </div>
+        {% endif %}
+
+      </div>
+    {% empty %}
+      <p class="text-center fs-2">Não há nenhuma entrada, seja o primeiro!</p>
+    {% endfor %}
+  </div>
+  <script src="{% static 'apagarEntrada.js' %}"></script>
+{% endblock content %}

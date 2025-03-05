@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block header %}
+{% endblock header %}
+{% block content %}
+  <div class="centralizado">
+    <h1 class="text-center mb-3">Diário de Aprendizado</h1>
+    <p class="lead text-center mb-3">
+      Cada jornada de conhecimento se torna mais estruturada e inspiradora. Adicione suas próprias anotações de maneira fácil, organize-as por categorias e retorne sempre que precisar revisar o que já foi estudado.
+    </p>
+    <div class="d-flex align-items-center justify-content-around">
+      <a href="{% url 'topicos' %}" class="btn btn-primary">Ver Tópicos</a>
+      <a href="{% url 'criar_conta' %}" class="btn btn-secondary">Criar Conta</a>
+    </div>
+  </div>
+  <style>
+  .centralizado {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  </style>
+{% endblock content %}

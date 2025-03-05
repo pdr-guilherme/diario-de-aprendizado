@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Tem certeza de que quer excluir sua conta?</h1>
+  <p>Esta ação não pode ser desfeita.</p>
+  <form method="post" action="{% url 'apagar_conta' %}">
+    {% csrf_token %}
+    <button class="botao" onClick=mudarImagem() type="submit">Sim, excluir minha conta</button>
+  </form>
+  <a href="{% url 'ver_perfil' user.username %}">Cancelar</a>
+  <div id="gato">
+    <!-- o único motivo que esse div existe é poder mostrar e mudar uma imagem -->
+  </div>
+  <style>
+  #gato {
+    width: 100px;
+    height: 100px;
+    background-image: url(https://i.kym-cdn.com/photos/images/original/002/606/895/a11.gif);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  </style>
+  <script>
+  function mudarImagem() {
+    document.getElementById("gato").style.backgroundImage = "url(https://i.kym-cdn.com/photos/images/newsfeed/002/606/883/bdf.jpg)"
+  }
+  </script>
+{% endblock content %}

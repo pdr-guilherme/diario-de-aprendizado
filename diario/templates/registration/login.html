@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p class="text-center display-6">Seu nome de usuário e senha não coincidem, tente novamente.</p>
+  {% endif %}
+
+  {% if next %}
+
+    {% if user.is_authenticated %}
+      <p class="text-center display-6">
+        Sua conta não tem acesso a essa página. Para prosseguir, faça login com uma conta que tenha.
+      </p>
+    {% else %}
+      <p class="text-center display-6">Faça login para ver essa página.</p>
+    {% endif %}
+  {% endif %}
+
+  <div class="col-6 mx-auto pb-3">
+    <h1 class="text-center display-5">
+      <b>Fazer Login</b>
+    </h1>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input class="btn btn-outline-primary w-100" type="submit" value="Login">
+      <input type="hidden" name="next" value="{{ next }}">
+    </form>
+  </div>
+{% endblock %}
